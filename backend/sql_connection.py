@@ -1,13 +1,23 @@
+import psycopg2
 import datetime
-import mysql.connector
 
 __cnx = None
 
 def get_sql_connection():
-  print("Opening mysql connection")
-  global __cnx
+    print("Opening PostgreSQL connection")
+    global __cnx
 
-  if __cnx is None:
-    __cnx = mysql.connector.connect(user='root', password='root', database='grocery_store')
+    if __cnx is None:
+        try:
+            __cnx = psycopg2.connect(
+                user="postgres",              # Your PostgreSQL username
+                password="your_password",     # Your PostgreSQL password
+                host="localhost",             # Database host
+                port="5432",                   # Default PostgreSQL port
+                database="grocery_store"       # Your database name
+            )
+        except Exception as e:
+            print("Error connecting to PostgreSQL:", e)
+            raise e
 
-  return __cnx
+    return __cnx

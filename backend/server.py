@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
-from sql_connection import get_sql_connection
-import mysql.connector
+from sql_connection import get_sql_connection  # Now using psycopg2 inside this
 import json
 
 import products_dao
@@ -9,6 +8,7 @@ import uom_dao
 
 app = Flask(__name__)
 
+# Get a PostgreSQL connection
 connection = get_sql_connection()
 
 @app.route('/getUOM', methods=['GET'])
@@ -62,5 +62,5 @@ def delete_product():
     return response
 
 if __name__ == "__main__":
-    print("Starting Python Flask Server For Grocery Store Management System")
-    app.run(port=5000)
+    print("Starting Python Flask Server For Grocery Store Management System (PostgreSQL)")
+    app.run(port=5000, debug=True)
